@@ -23,6 +23,7 @@ var playerMaxSpeed;
 // Player health
 var playerHealth;
 var playerMaxHealth = 1255;
+var loseHealth = -0.5;
 // Player fill color
 var playerFill = 50;
 //speed increaser
@@ -133,10 +134,12 @@ function handleInput() {
 // hold down shift for increase speed
   if (keyIsDown(SHIFT)) {
     playerMaxSpeed = fastSpeed;
+    loseHealth = 5;
   }
   else {
-      playerMaxSpeed = normalSpeed;
-    }
+    playerMaxSpeed = normalSpeed;
+    loseHealth = 0.5;
+  }
 }
 
 // movePlayer()
@@ -170,7 +173,7 @@ function movePlayer() {
 // Check if the player is dead
 function updateHealth() {
   // Reduce player health, constrain to reasonable range
-  playerHealth = constrain(playerHealth - 0.5,0,playerMaxHealth);
+  playerHealth = constrain(playerHealth - loseHealth,0,playerMaxHealth);
   // Check if the player is dead
   if (playerHealth === 0) {
     // If so, the game is over
