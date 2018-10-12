@@ -22,7 +22,7 @@ var playerVY = 0;
 var playerMaxSpeed;
 // Player health
 var playerHealth;
-var playerMaxHealth = 255;
+var playerMaxHealth = 1255;
 var loseHealth = -0.5;
 // Player fill color
 var playerFill = 50;
@@ -217,8 +217,10 @@ function checkEating() {
       preyY = random(0,height);
       // Give it full health
       preyHealth = preyMaxHealth;
+      playerHealth = playerMaxHealth;
       // Track how many prey were eaten
       preyEaten++;
+      playerSize += 5;
     }
   }
 }
@@ -276,8 +278,7 @@ function drawPlayer() {
   var alpha = map(playerHealth, 0,playerMaxHealth,0,255); ;
 //  fill(playerFill,playerHealth
   tint(255, alpha);
-  image(DylanImage,playerX,playerY,playerSize,playerSize+20);
-
+  image(DylanImage,playerX,playerY,playerSize,playerSize);
   noTint();
 
 }
