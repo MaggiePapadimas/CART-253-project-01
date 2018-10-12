@@ -52,7 +52,9 @@ var scoreCounter = 0;
 //seperates menu/game/end screen
 var gameScreen = 0;
 
-//background image
+//sounds
+var appleCrunch;
+var music;
 
 // setup()
 //
@@ -62,15 +64,23 @@ function setup() {
   noStroke();
 
   setupPrey();
+
   setupPlayer();
+  musicPlayer();
 
 }
 function preload() {
 //sounds
+  appleCrunch = new Audio("assets/sounds/appleCrunch.wav");
+  music = new Audio("assets/sounds/music.wav");
 //animals
   appleImage = loadImage("assets/images/apple.png");
   DylanImage = loadImage("assets/images/Dylan.png");
   backgroundImage = loadImage("assets/images/background.png");
+}
+function musicPlayer(){
+  music.play();
+  music.currentTime = 0;
 }
 // setupPrey()
 //
@@ -209,6 +219,9 @@ function checkEating() {
     playerHealth = constrain(playerHealth + eatHealth,0,playerMaxHealth);
     // Reduce the prey health
     preyHealth = constrain(preyHealth - eatHealth,0,preyMaxHealth);
+    //plays sound
+    appleCrunch.play();
+    appleCrunch.currentTime = 0;
 
     // Check if the prey died
     if (preyHealth === 0) {
@@ -291,7 +304,7 @@ function showGameOver() {
   textAlign(CENTER,CENTER);
   fill(0);
   var gameOverText = "GAME OVER\n";
-  gameOverText += "You ate " + preyEaten + " prey\n";
-  gameOverText += "before you died."
+  gameOverText += "O'Brien ate " + preyEaten + " apples\n";
+  gameOverText += "before he faded away!"
   text(gameOverText,width/2,height/2);
 }
