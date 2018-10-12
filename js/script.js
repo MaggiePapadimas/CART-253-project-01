@@ -28,14 +28,14 @@ var loseHealth = -0.5;
 var playerFill = 50;
 //speed increaser
 var fastSpeed = 10;
-var normalSpeed = 2;
+var normalSpeed = 5;
 // Prey position, size, velocity
 var preyX;
 var preyY;
 var preyRadius = 25;
 var preyVX;
 var preyVY;
-var preyMaxSpeed = 10;
+var preyMaxSpeed = 15;
 // Prey health
 var preyHealth;
 var preyMaxHealth = 100;
@@ -133,7 +133,7 @@ function handleInput() {
 // hold down shift for increase speed
   if (keyIsDown(SHIFT)) {
     playerMaxSpeed = fastSpeed;
-    loseHealth = 5;
+    loseHealth = 2;
   }
   else {
     playerMaxSpeed = normalSpeed;
