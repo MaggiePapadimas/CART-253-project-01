@@ -1,9 +1,9 @@
 /******************************************************
 
 Game - Chaser
-Pippin Barr
+Magdalene Papadimas
 
-A simple game of cat and mouse.
+Hungry O'Brien. This game is about feeding the hungry Dylan O'Brien as many apples as you can before he fades away!
 
 Physics-based movement, keyboard controls, health/stamina,
 sprinting, random movement, screen wrap.
@@ -16,13 +16,13 @@ var gameOver = false;
 // Player position, size, velocity
 var playerX;
 var playerY;
-var playerRadius = 25;
+var playerSize = 60;
 var playerVX = 0;
 var playerVY = 0;
 var playerMaxSpeed;
 // Player health
 var playerHealth;
-var playerMaxHealth = 1255;
+var playerMaxHealth = 255;
 var loseHealth = -0.5;
 // Player fill color
 var playerFill = 50;
@@ -32,7 +32,7 @@ var normalSpeed = 5;
 // Prey position, size, velocity
 var preyX;
 var preyY;
-var preyRadius = 25;
+var preySize = 35;
 var preyVX;
 var preyVY;
 var preyMaxSpeed = 15;
@@ -46,19 +46,32 @@ var preyFill = 200;
 var eatHealth = 10;
 // Number of prey eaten during the game
 var preyEaten = 0;
+//score
+var score;
+var scoreCounter = 0;
+//seperates menu/game/end screen
+var gameScreen = 0;
+
+//background image
 
 // setup()
 //
 // Sets up the basic elements of the game
 function setup() {
-  createCanvas(windowWidth, windowHeight);
-  score();
+  createCanvas(1920, 930);
   noStroke();
 
   setupPrey();
   setupPlayer();
-}
 
+}
+function preload() {
+//sounds
+//animals
+  appleImage = loadImage("assets/images/apple.png");
+  DylanImage = loadImage("assets/images/Dylan.png");
+  backgroundImage = loadImage("assets/images/background.png");
+}
 // setupPrey()
 //
 // Initialises prey's position, velocity, and health
@@ -88,6 +101,10 @@ function setupPlayer() {
 // When the game is over, shows the game over screen.
 function draw() {
   background(100,100,200);
+  image(backgroundImage,width/1000,height/1000);
+  textSize(25);
+  fill(0);
+  text("Apples: " +preyEaten, 810, 20);
   if (!gameOver) {
     handleInput();
 
@@ -187,7 +204,7 @@ function checkEating() {
   // Get distance of player to prey
   var d = dist(playerX,playerY,preyX,preyY);
   // Check if it's an overlap
-  if (d < playerRadius + preyRadius) {
+  if (d < playerSize + preySize) {
     // Increase the player health
     playerHealth = constrain(playerHealth + eatHealth,0,playerMaxHealth);
     // Reduce the prey health
@@ -206,10 +223,9 @@ function checkEating() {
   }
 }
 function score(){
-  textAlign(CENTER);
   textSize(50);
   fill(0);
-  text("Score: " +checkEating, windowWidth*2, windowHeight*2);
+  text("Score: " +preyEaten, width*2, height*2);
 }
 // movePrey()
 //
@@ -251,14 +267,19 @@ function movePrey() {
 // Draw the prey as an ellipse with alpha based on health
 function drawPrey() {
   fill(preyFill,preyHealth);
-  ellipse(preyX,preyY,preyRadius*2);
+  image(appleImage,preyX,preyY,preySize,preySize);
 }
 // drawPlayer()
 //
 // Draw the player as an ellipse with alpha based on health
 function drawPlayer() {
-  fill(playerFill,playerHealth);
-  ellipse(playerX,playerY,playerRadius*2);
+  var alpha = map(playerHealth, 0,playerMaxHealth,0,255); ;
+//  fill(playerFill,playerHealth
+  tint(255, alpha);
+  image(DylanImage,playerX,playerY,playerSize,playerSize+20);
+
+  noTint();
+
 }
 
 // showGameOver()
