@@ -81,6 +81,7 @@ function preload() {
 function musicPlayer(){
   music.play();
   music.currentTime = 0;
+  music.loop = true;
 }
 // setupPrey()
 //
